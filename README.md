@@ -1,5 +1,6 @@
 # Neo4jAPI
-A REST API using Neo4j as database agent to interact with data contained in graphs.
+A REST API using Neo4j as database agent to interact with data contained in graphs.  
+This project uses the Python Flask environment and furthermore Flask-restplus to perform http requests.
 
 ## Installation
 
@@ -16,7 +17,14 @@ Then, install all packages in requirements.txt on your venv :
 pip install -r requirements.txt
 ```
 
-## Usage
+## Setup project and flask env
+
+The project needs a .env for configuration, it should contain :  
+````bash
+DB_URI = your neo4j graph database uri
+USERNAME = username for authenication in the current graph
+PASSWORD = password for authentication in the current graph
+````
 
 ```python
 import foobar
