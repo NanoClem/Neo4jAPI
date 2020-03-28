@@ -32,5 +32,7 @@ FLASK_RUN_PORT = port on which flask is running
 FLASK_RUN_HOST = host on which flask is running
 FLASK_ENV = development (here debug mode is enabled, change it according to your development stade)
 ````
-
-
+Finally, run the following command to start your flask app :  
+````bash
+flask run
+````
