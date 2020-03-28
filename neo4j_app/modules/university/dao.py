@@ -141,6 +141,20 @@ class UnivDAO(object):
             return jsonify( self.serialize_relation(record['r']) )
 
 
+    def delete_relation(self, name1, name2):
+        """ Delete a relation between two universities
+        """
+        self.db.run("MATCH (n1:university {name:'%s'})-[r:connects_in]->(n2:university {name:'%s'}) DELETE r" % (name1, name2))
+        return ''
+ 
+
+    def delete_AllRelations(self, name):
+        """ Delete all relations from a university
+        """
+        self.db.run("MATCH(n:university {name:'%s'})-[r]-(:university) DELETE r" % name)
+        return ''
+
+
     def getAllRelationships(self):
         """ Get all relationships in the graph
         """
