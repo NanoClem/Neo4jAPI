@@ -43,7 +43,6 @@ if __name__ == "__main__":
     
     db_driver = neo4j_driver
     with db_driver.session() as db_session:
-        results = db_session.run("MATCH(n:university)-[r]->(:university) RETURN n, r")
-        print(type(results))
+        results = db_session.run("MATCH(n:university {name:'Poltech'}) RETURN n")
         for r in results:
-            print(serialize_relation(r['r']))
+            print(serialize_node(r['n']))

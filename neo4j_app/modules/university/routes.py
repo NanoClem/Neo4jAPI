@@ -16,7 +16,7 @@ class UnivList(Resource):
     """
 
     @ns.doc('get_nodes')
-    #@ns.marshal_list_with(univ_model, envelope='data')
+    #@ns.marshal_list_with(univ_model)
     def get(self):
         """Return a list of all nodes"""
         return make_response(DAO.getAllNodes(), 200)
@@ -129,23 +129,9 @@ class UnivByID(Resource):
     @ns.doc('get_node_by_id')
     #@ns.marshal_with(univ_model)
     def get(self, id):
-        """Returns a single node by its id"""
+        """Returns a single node by its id
+        """
         return make_response(DAO.getByID(id), 200)
-
-
-    # @ns.doc('update_node')
-    # def put(self, id):
-    #     """Update a node"""
-    #     DAO.update(id, ns.payload)
-    #     return make_response('', 201)
-
-
-    # @ns.doc('delete_node')
-    # @ns.response(204, 'Univ deleted')
-    # def delete(self, id):
-    #     """Delete a node"""
-    #     DAO.delete(id)
-    #     return make_response('', 204)
 
 
 
@@ -154,7 +140,10 @@ class UnivByID(Resource):
 #---------------------------------------------
 
 @ns.route("/<string:name>")
-@ns.response(404, 'Univ node not found')
+@ns.response(200, 'Success')
+@ns.response(201, 'Univ successfuly inserted or updated')
+@ns.response(204, 'Univ successfuly deleted with its relationships')
+@ns.response(404, 'Univ not found')
 @ns.param('name', 'Name of the university')
 class UnivByName(Resource):
     """ Show a single node, update one, or delete one by its name

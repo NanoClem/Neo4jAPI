@@ -33,8 +33,10 @@ class UnivDAO(object):
         """
         """
         return {
-            'id'   : node.id,
-            'name' : node['name']
+            'id'         : node.id,
+            'name'       : node['name'],
+            'created_at' : str(node['created_at']),
+            'last_update': str(node['updated'])
         }
 
 
@@ -44,6 +46,8 @@ class UnivDAO(object):
         return {
             'id'    : relation.id,
             'type'  : relation.type,
+            'created_at' : str(relation['created_at']),
+            'last_update': str(relation['last_update']),
             'nodes' : {
                 'concerned'  : self.serialize_node(relation.nodes[0]),
                 'related_to' : self.serialize_node(relation.nodes[1]),
@@ -65,24 +69,11 @@ class UnivDAO(object):
         
         """
         res = self.db.run('MATCH (n:university) WHERE ID(n)={} RETURN n'.format(id))
-        if res :
-            for r in res:
-                record = self.serialize_node(r['n'])
+        for r in res:
+            record = self.serialize_node(r['n'])
             return jsonify(record)
         self.ns.abort(404, message="Id {} doesn't exist".format(id), data={})
         
-
-    # def update(self, id, data):
-    #     """Update a data collection"""
-    #     crypto = self.getByID(id)
-    #     self.db.update_one(crypto, data)
-
-
-    # def delete(self, id):
-    #     """Delete a data collection"""
-    #     data = self.getByID(id)
-    #     self.db.delete_one(data)
-
 
     #---------------------------------------------
     #   BY NAME
@@ -97,10 +88,9 @@ class UnivDAO(object):
         
         """
         res = self.db.run("MATCH (n:university {name:'%s'}) RETURN n" % name)
-        if res :
-            record = {}
-            for r in res :
-                record = self.serialize_node(r['n'])
+        record = {}
+        for r in res :
+            record = self.serialize_node(r['n'])
             return jsonify(record)
         self.ns.abort(404, message="Name {} doesn't exist".format(name), data={})
     
@@ -119,10 +109,9 @@ class UnivDAO(object):
     def create_univ(self, name):
         """ Create a new university 
         """
-        res = self.db.run("MERGE (n:university {name:'%s'}) ON MATCH SET r.updated = date() RETURN n" % name)   # MERGE checks if the node exists before inserting (insert-or-update)
+        res = self.db.run("MERGE (n:university {name:'%s'}) ON MATCH SET n.last_update=date() ON CREATE SET n.created_at=date() RETURN n" % name)   # security : MERGE checks if the node exists before inserting (insert-or-update)
         for record in res :
             return jsonify( self.serialize_node(record['n']) )
-        self.ns.abort(409, message="University {} already exists".format(name))
 
     
     def delete_univ(self, name):
@@ -140,7 +129,7 @@ class UnivDAO(object):
         """ Create a relationship between two universities
         """
         querry_match  = "MATCH (n1:university {name:'%s'}), (n2:university {name:'%s'})" % (name1, name2)
-        querry_create = "MERGE (n1)-[r:connects_in {miles:'%d'}]->(n2) ON MATCH SET r.updated = date() RETURN r " % (data['miles'])
+        querry_create = "MERGE (n1)-[r:connects_in {miles:'%d'}]->(n2) ON MATCH SET n.last_update=date() ON CREATE SET n.created_at=date() RETURN r " % (data['miles'])
         res = self.db.run(querry_match + " " + querry_create)
         for record in res :
             return jsonify( self.serialize_relation(record['r']) )
