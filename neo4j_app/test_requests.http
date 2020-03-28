@@ -2,16 +2,16 @@ GET http://localhost:3000/api/univ HTTP/1.1
 
 ###
 
-POST http://localhost:3000/api/univ/relationship/SciencesPD/Polytech HTTP/1.1
+POST http://localhost:3000/api/univ/relationship/INSA/Polytech HTTP/1.1
 content-type: application/json
 
 {
-    "miles": 1521121
+    "miles": 150
 }
 
 ###
 
-POST http://localhost:3000/api/univ/SncesPD HTTP/1.1
+POST http://localhost:3000/api/univ/Polytech HTTP/1.1
 
 ###
 
@@ -23,4 +23,4 @@ DELETE http://localhost:3000/api/univ/Yale%20University/relationship HTTP/1.1
 
 ###
 
-DELETE http://localhost:3000/api/univ/SciencesPD HTTP/1.1
+DELETE http://localhost:3000/api/univ/Polytech HTTP/1.1
