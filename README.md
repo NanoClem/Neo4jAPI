@@ -17,14 +17,17 @@ Then, install all packages in requirements.txt on your venv :
 pip install -r requirements.txt
 ```
 
-## Setup project and flask env
+## Setup project
 
 The project needs a .env file for configuration, it should contain :  
 ````bash
 DB_URI = your neo4j graph database uri
 USERNAME = username for authenication in the current graph
 PASSWORD = password for authentication in the current graph
-````
+````  
+
+## Setup flask env
+
 Now to setup the flask env, you'll find a default .flaskenv file to the project root folder with :  
 ````bash
 FLASK_APP = neo4j_app (don't change it unless you know what you're doing)
