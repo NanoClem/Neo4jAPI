@@ -119,7 +119,7 @@ class UnivDAO(object):
     def create_univ(self, name):
         """ Create a new university 
         """
-        res = self.db.run("CREATE (n:university {name:'%s'}) RETURN n" % name)
+        res = self.db.run("MERGE (n:university {name:'%s'}) ON MATCH SET r.updated = date() RETURN n" % name)   # MERGE checks if the node exists before inserting (insert-or-update)
         for record in res :
             return jsonify( self.serialize_node(record['n']) )
         self.ns.abort(409, message="University {} already exists".format(name))
@@ -140,7 +140,7 @@ class UnivDAO(object):
         """ Create a relationship between two universities
         """
         querry_match  = "MATCH (n1:university {name:'%s'}), (n2:university {name:'%s'})" % (name1, name2)
-        querry_create = "CREATE (n1)-[r:connects_in {miles:'%d'}]->(n2) RETURN r" % (data['miles'])
+        querry_create = "MERGE (n1)-[r:connects_in {miles:'%d'}]->(n2) ON MATCH SET r.updated = date() RETURN r " % (data['miles'])
         res = self.db.run(querry_match + " " + querry_create)
         for record in res :
             return jsonify( self.serialize_relation(record['r']) )
