@@ -132,40 +132,38 @@ class UnivDAO(object):
     #---------------------------------------------
 
     def create_relation(self, data):
-        """
+        """ Create a relationship between two universities
         """
         querry_match  = "MATCH (n1:university {name:'%s'}), (n2:university {name:'%s'})" % (data['concerned']['name'], data['related_to']['name'])
         querry_create = "CREATE (n1)-[r:%s {miles:'%d'}]->(n2) RETURN r" % (data['type'], data['relations']['miles'])
         res = self.db.run(querry_match + " " + querry_create)
-
         for record in res :
             return jsonify( self.serialize_relation(record['r']) )
 
 
-
     def getAllRelationships(self):
-        """
+        """ Get all relationships in the graph
         """
         res = self.db.run("MATCH(n:university)-[r]->(:university) RETURN n, r")
         return jsonify( list(self.serialize_relation(record['r']) for record in res) )
 
 
     def getRelById(self, id):
-        """
+        """ Get a relationship by its id
         """
         res = self.db.run('MATCH (n:university)-[r]->(:university) WHERE ID(r)={} RETURN n, r'.format(id))
         return jsonify( list(self.serialize_relation(record['r']) for record in res) )
 
 
     def getRelByNodeId(self, id):
-        """
+        """ Get a relationship by the id of a university
         """
         res = self.db.run('MATCH (n:university)-[r]->(:university) WHERE ID(n)={} RETURN n, r'.format(id))
         return jsonify( list(self.serialize_relation(record['r']) for record in res) )
 
 
     def getRelByName(self, name):
-        """
+        """ Get a relationship by the name of a university
         """
         res = self.db.run("MATCH(n:university {name:'%s'})-[r]->(:university) RETURN n, r" % name)
         return jsonify( list(self.serialize_relation(record['r']) for record in res) )
