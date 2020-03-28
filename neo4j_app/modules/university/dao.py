@@ -131,11 +131,11 @@ class UnivDAO(object):
     #   RELATIONSHIPS
     #---------------------------------------------
 
-    def create_relation(self, data):
+    def create_relation(self, name1, name2, data):
         """ Create a relationship between two universities
         """
-        querry_match  = "MATCH (n1:university {name:'%s'}), (n2:university {name:'%s'})" % (data['concerned']['name'], data['related_to']['name'])
-        querry_create = "CREATE (n1)-[r:%s {miles:'%d'}]->(n2) RETURN r" % (data['type'], data['relations']['miles'])
+        querry_match  = "MATCH (n1:university {name:'%s'}), (n2:university {name:'%s'})" % (name1, name2)
+        querry_create = "CREATE (n1)-[r:connects_in {miles:'%d'}]->(n2) RETURN r" % (data['miles'])
         res = self.db.run(querry_match + " " + querry_create)
         for record in res :
             return jsonify( self.serialize_relation(record['r']) )

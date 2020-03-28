@@ -14,8 +14,9 @@ db = get_db()               # db graph
 DAO = UnivDAO(db, ns)       # univ controller
 
 # MODELS
-univ_model = create_univ_model(ns)  
-rel_model  = create_relationship_model(ns, univ_model, create_distance_model(ns))
+univ_model = create_univ_model(ns)
+rel_param  =  create_distance_model(ns)  
+rel_model  = create_relationship_model(ns, univ_model, rel_param)
 
 
 from .routes import *

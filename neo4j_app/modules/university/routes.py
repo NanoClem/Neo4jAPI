@@ -3,12 +3,13 @@ from datetime import datetime
 from flask import make_response
 from flask_restplus import Resource
 
-from neo4j_app.modules.university import ns, db, DAO, univ_model, rel_model
+from neo4j_app.modules.university import ns, db, DAO, univ_model, rel_model, rel_param
 
 
 #---------------------------------------------
 #   MANY NODES
 #---------------------------------------------
+
 @ns.route('/', strict_slashes = False)     # strict_slashes setted to False so the debuger ignores it
 class UnivList(Resource):
     """ Get a list of all stored nodes and allows to POST multiple nodes
@@ -21,16 +22,11 @@ class UnivList(Resource):
         return make_response(DAO.getAllNodes(), 200)
 
 
-#     @ns.doc('create_nodes')
-#     @ns.expect(univ)
-#     def post(self):
-#         """Create multiple nodes"""
-#         return make_response(DAO.createMany(ns.payload), 201)
-
 
 #---------------------------------------------
 #   RELATIONSHIP
 #---------------------------------------------
+
 @ns.route('/relationship', strict_slashes = False)     # strict_slashes setted to False so the debuger ignores it
 class RelationList(Resource):
     """ Get a list of all relationships between universities
@@ -39,17 +35,26 @@ class RelationList(Resource):
     @ns.doc('get_relationships')
     #@ns.marshal_list_with(rel_model)
     def get(self):
-        """Return a list of all relationships between universities
+        """ Return a list of all relationships between universities
         """
         return make_response(DAO.getAllRelationships(), 200)
 
 
+
+@ns.route('/relationship/<string:univ_name1>/<string:univ_name2>', strict_slashes = False)     # strict_slashes setted to False so the debuger ignores it
+@ns.param('univ_name1', 'name of the university to add the relation')
+@ns.param('univ_name2', 'name of the university which the first one is connected to')
+class PostRelation(Resource):
+    """ Get a list of all relationships between universities
+    """
+
     @ns.doc("create_relationship")
-    @ns.expect(rel_model)
-    def post(self):
+    @ns.expect(rel_param)
+    def post(self, univ_name1, univ_name2):
+        """ Create a relationship between two universities
         """
-        """
-        return make_response(DAO.create_relation(ns.payload), 201)
+        return make_response(DAO.create_relation(univ_name1, univ_name2, ns.payload), 201)
+
 
 
 @ns.route("/relationship/<int:id>")
@@ -66,6 +71,7 @@ class RelationById(Resource):
         return make_response(DAO.getRelById(id), 200)
 
 
+
 @ns.route("/<string:name>/relationship")
 @ns.response(404, 'Univ name not found')
 @ns.param('name', 'Name of the university')
@@ -80,6 +86,7 @@ class RelationByName(Resource):
         return make_response(DAO.getRelByName(name), 200)
 
 
+
 @ns.route("/<int:id>/relationship")
 @ns.response(404, 'Univ id not found')
 @ns.param('id', 'id of the university')
@@ -92,6 +99,7 @@ class RelationByUnivId(Resource):
     def get(self, id):
         """Returns relationships of a university by its id"""
         return make_response(DAO.getRelByNodeId(id), 200)
+
 
 
 #---------------------------------------------
@@ -127,9 +135,11 @@ class UnivByID(Resource):
     #     return make_response('', 204)
 
 
+
 #---------------------------------------------
 #   CRUD BY NAME
 #---------------------------------------------
+
 @ns.route("/<string:name>")
 @ns.response(404, 'Univ node not found')
 @ns.param('name', 'Name of the university')
