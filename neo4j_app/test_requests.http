@@ -16,3 +16,7 @@ DELETE http://localhost:3000/api/univ/relationship/Yale%20University/Cornell%20U
 ###
 
 DELETE http://localhost:3000/api/univ/Yale%20University/relationship HTTP/1.1
+
+###
+
+DELETE http://localhost:3000/api/univ/SciencesPD HTTP/1.1

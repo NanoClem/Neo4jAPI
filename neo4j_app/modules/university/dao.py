@@ -119,12 +119,17 @@ class UnivDAO(object):
     def create_univ(self, name):
         """ Create a new university 
         """
-        if self.db.run("MATCH (n:university {name:'%s'}) RETURN n" % name) :
-            res = self.db.run("CREATE (n:university {name:'%s'}) RETURN n" % name)
-            for record in res :
-                return jsonify( self.serialize_node(record['n']) )
-
+        res = self.db.run("CREATE (n:university {name:'%s'}) RETURN n" % name)
+        for record in res :
+            return jsonify( self.serialize_node(record['n']) )
         self.ns.abort(409, message="University {} already exists".format(name))
+
+    
+    def delete_univ(self, name):
+        """ Delete a university and remove all its relationships
+        """
+        self.db.run("MATCH (n:university {name:'%s'}) DETACH DELETE n" % name)
+        return ''
 
 
     #---------------------------------------------

@@ -163,10 +163,18 @@ class UnivByName(Resource):
     @ns.doc('get_univ_by_name')
     #@ns.marshal_with(univ_model)
     def get(self, name):
-        """Returns a single node by its name"""
+        """Returns a single node by its name
+        """
         return make_response(DAO.getByName(name), 200)
 
     @ns.doc('create_univ')
     def post(self, name):
-        """Create a new university"""
+        """ Create a new university
+        """
         return make_response(DAO.create_univ(name), 201)
+
+    @ns.doc('delete_univ')
+    def delete(self, name):
+        """ Delete a university
+        """
+        return make_response(DAO.delete_univ(name), 204)
