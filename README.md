@@ -4,8 +4,8 @@ This project uses the Python Flask environment and furthermore Flask-restplus to
 
 ## Installation
 
-If you don't have Python installed, [get it here](https://www.python.org/downloads)  
-I recommend you to use the package manager [pip](https://pip.pypa.io/en/stable/) to setup a virtual environment. I personnaly used [virtualenv](https://virtualenv.pypa.io/en/latest), but you're free to choose the one that suits you best.  
+If you don't have Python installed yet, [get it here](https://www.python.org/downloads)  
+I recommend you to use the package manager [pip](https://pip.pypa.io/en/stable/) to setup a virtual environment. I personnaly used [virtualenv](https://virtualenv.pypa.io/en/latest), but you're free to choose one that suits you best.  
 Go to the project root folder and type the following commands :
 
 ```bash
@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 ## Setup project and flask env
 
-The project needs a .env for configuration, it should contain :  
+The project needs a .env file for configuration, it should contain :  
 ````bash
 DB_URI = your neo4j graph database uri
 USERNAME = username for authenication in the current graph
