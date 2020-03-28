@@ -14,5 +14,5 @@ def register_api(app):
     """
     from neo4j_app.modules.university import ns as ns_univ
     
-    api.add_namespace(ns_univ)  # adding record namespace
+    api.add_namespace(ns_univ)  # adding univ namespace
     api.init_app(app)
