@@ -39,3 +39,4 @@ Finally, run the following command to start your flask app :
 ````bash
 flask run
 ````
+The default base url should lead you to a swagger documentation of the API.
