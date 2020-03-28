@@ -25,11 +25,12 @@ DB_URI = your neo4j graph database uri
 USERNAME = username for authenication in the current graph
 PASSWORD = password for authentication in the current graph
 ````
+Now to setup the flask env, you'll find a default .flaskenv file to the project root folder with :  
+````bash
+FLASK_APP = neo4j_app (don't change it unless you know what you're doing)
+FLASK_RUN_PORT = port on which flask is running
+FLASK_RUN_HOST = host on which flask is running
+FLASK_ENV = development (here debug mode is enabled, change it according to your development stade)
+````
 
-```python
-import foobar
 
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
