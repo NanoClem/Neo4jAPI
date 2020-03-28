@@ -4,7 +4,7 @@ A REST API using Neo4j as database agent to interact with data contained in grap
 ## Installation
 
 If you don't have Python installed, [get it here](https://www.python.org/downloads)  
-I recommend you to use the package manager [pip](https://pip.pypa.io/en/stable/) to setup a virtual environment.
+I recommend you to use the package manager [pip](https://pip.pypa.io/en/stable/) to setup a virtual environment. I personnaly used virtualenv, but you're free to choose the one that suits you best.
 
 ```bash
 pip install virtualenv
