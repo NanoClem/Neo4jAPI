@@ -4,7 +4,7 @@ This project uses the Python [Flask](https://flask.palletsprojects.com/en/1.1.x)
 
 It is an example of a Flask x Neo4j use, based on this dataset : https://pythontic.com/database/neo4j/create%20nodes%20and%20relationships
 
-**Since this project is fully based on a single data model, a more adaptative version is available [here](https://github.com/NanoClem/Flask4J-api) if you want to deal with any dataset.**
+**Since this project is fully based on a single data model, a more generic version is available [here](https://github.com/NanoClem/Flask4J-api) if you want to deal with any dataset.**
 
 ## Installation
 
